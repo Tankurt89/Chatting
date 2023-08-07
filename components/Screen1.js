@@ -95,7 +95,6 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         margin: 10,
         padding: 10,
-        alignSelf: 'left'
     },
     circle: {
         height: 50,
