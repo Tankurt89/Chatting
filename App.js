@@ -1,5 +1,5 @@
-import Screen1 from './components/Screen1'
-import Screen2 from './components/Screen2'
+import Screen1 from './components/start'
+import Screen2 from './components/chat'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
