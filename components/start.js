@@ -104,10 +104,6 @@ const styles = StyleSheet.create({
         width: 50, 
         borderRadius: 25,
     },
-    selectedCircle: {
-        borderWidth: 2,
-        borderColor: '#808080'
-    },
     buttonInput: {
         alignContent: 'center',
         backgroundColor: '#757083',
