@@ -14,11 +14,13 @@ const Screen1 = ({ navigation }) => {
                 <TextInput
                     style={styles.textInput}
                     value={name}
-                    onChangeText={setName} 
+                    onChangeText={setName}
                     placeholder="Your name"
                 />
+                {/* Start of the options area, where you will enter username, select bg color, and start chatting */}
                 <Text style={styles.colorSelectText}>Choose Background Color:</Text>
                 <View style={styles.colorSelect}>
+                    {/* Each individual background color choice is mapped out here */}
                     <TouchableOpacity 
                     style={[styles.circle, {backgroundColor: '#090C08'}]}
                     onPress={() => setColor('#090C08')}>
@@ -42,6 +44,7 @@ const Screen1 = ({ navigation }) => {
                 </View>
                 <TouchableOpacity
                     style={styles.buttonInput}
+                    // on moving to the chat area check to see if a name was entered and if not return default name of User, also check to see if a background color was selected if not return default white
                     onPress={() => navigation.navigate('Screen2', { name: name ? name: "User", color: color? color: "#FFF"})}>
                     <Text style={styles.text}>Start Chatting</Text>
                 </TouchableOpacity>
@@ -118,7 +121,7 @@ const styles = StyleSheet.create({
         color: '#FFF',
         fontSize: 16,
         fontWeight: '600',
-    }
+    },
 })
 
 export default Screen1;
