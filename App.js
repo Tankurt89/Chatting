@@ -12,11 +12,11 @@ const App = () => {
         initialRouteName="Screen1"
       >
         <Stack.Screen
-          name="Screen1"
+          name="Home"
           component={Screen1}
         />
         <Stack.Screen
-          name="Screen2"
+          name="Chat"
           component={Screen2}
         />
       </Stack.Navigator>
