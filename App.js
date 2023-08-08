@@ -1,5 +1,5 @@
-import Screen1 from './components/start'
-import Screen2 from './components/chat'
+import Home from './components/start'
+import Chat from './components/chat'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
@@ -13,11 +13,11 @@ const App = () => {
       >
         <Stack.Screen
           name="Home"
-          component={Screen1}
+          component={Home}
         />
         <Stack.Screen
           name="Chat"
-          component={Screen2}
+          component={Chat}
         />
       </Stack.Navigator>
     </NavigationContainer>

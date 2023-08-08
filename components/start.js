@@ -2,7 +2,7 @@ import { useState } from "react";
 import { StyleSheet, View, Text, TouchableOpacity, TextInput, ImageBackground } from "react-native";
 import image from '../assets/BackgroundImage.png'
 
-const Screen1 = ({ navigation }) => {
+const Home = ({ navigation }) => {
     const [name, setName] = useState('')
     const [color, setColor] = useState('')
 
@@ -45,7 +45,7 @@ const Screen1 = ({ navigation }) => {
                 <TouchableOpacity
                     style={styles.buttonInput}
                     // on moving to the chat area check to see if a name was entered and if not return default name of User, also check to see if a background color was selected if not return default white
-                    onPress={() => navigation.navigate('Screen2', { name: name ? name: "User", color: color? color: "#FFF"})}>
+                    onPress={() => navigation.navigate('Chat', { name: name ? name: "User", color: color? color: "#FFF"})}>
                     <Text style={styles.text}>Start Chatting</Text>
                 </TouchableOpacity>
             </View>
@@ -120,4 +120,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default Screen1;
+export default Home;

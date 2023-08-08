@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Bubble, GiftedChat } from 'react-native-gifted-chat';
 import { StyleSheet, View, Text, KeyboardAvoidingView } from 'react-native';
 
-const Screen2 = ({ route, navigation }) => {
+const Chat = ({ route, navigation }) => {
     const { name, color } = route.params;
     const [messages, setMessages] = useState([])
     const onSend = (newMessages) => {
@@ -71,4 +71,4 @@ const styles = StyleSheet.create({
  
 });
 
-export default Screen2;
+export default Chat;
