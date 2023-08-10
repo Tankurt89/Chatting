@@ -1,10 +1,23 @@
 import { useState } from "react";
-import { StyleSheet, View, Text, TouchableOpacity, TextInput, ImageBackground } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, TextInput, ImageBackground, Alert } from "react-native";
 import image from '../assets/BackgroundImage.png'
+import { getAuth, signInAnonymously } from "firebase/auth"
 
 const Home = ({ navigation }) => {
     const [name, setName] = useState('')
     const [color, setColor] = useState('')
+    const auth = getAuth();
+
+    const signInUser = () => {
+        signInAnonymously(auth)
+            .then((result) => {
+                navigation.navigate("Chat", { userID: result.user.uid, name: name, color: color ? color: '#FFF'})
+                Alert.alert("Signed in Successfully!")
+            })
+            .catch(error => {
+                Alert.alert("Unable to sign in, try again later.")
+            })
+    }
 
     return (
         <View style={styles.container}>
@@ -42,11 +55,10 @@ const Home = ({ navigation }) => {
                     onPress={() => setColor('#aaa')}>
                     </TouchableOpacity>
                 </View>
-                <TouchableOpacity
-                    style={styles.buttonInput}
-                    // on moving to the chat area check to see if a name was entered and if not return default name of User, also check to see if a background color was selected if not return default white
-                    onPress={() => navigation.navigate('Chat', { name: name ? name: "User", color: color? color: "#FFF"})}>
-                    <Text style={styles.text}>Start Chatting</Text>
+                <TouchableOpacity style={styles.buttonInput}>
+                    {/* // on moving to the chat area check to see if a name was entered and if not return default name of User, also check to see if a background color was selected if not return default white
+                    onPress={() => navigation.navigate('Chat', { name: name ? name: "User", color: color? color: "#FFF"})}> */}
+                    <Text onPress={signInUser} style={styles.text}>Start Chatting</Text>
                 </TouchableOpacity>
             </View>
             </ImageBackground>
