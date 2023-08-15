@@ -4,12 +4,12 @@ import { StyleSheet, View, Text, KeyboardAvoidingView } from 'react-native';
 import { addDoc, collection, query, onSnapshot, orderBy } from "firebase/firestore"
 
 const Chat = ({ route, navigation, db }) => {
-    const { name, color, uid } = route.params;
+    const { name, color, userID } = route.params;
     const [messages, setMessages] = useState([])
     const onSend = (newMessages) => {
         addDoc(collection(db, "messages"), newMessages[0])
     }
-    //displays a default message letting you know you joined the chat and an example message saying hello. 
+     
     useEffect(() => {
         navigation.setOptions({ title: name})
         const q = query(collection(db, "messages"),  orderBy("createdAt", "desc"))
@@ -52,7 +52,7 @@ const Chat = ({ route, navigation, db }) => {
             renderBubble={renderBubble}
             onSend={messages => onSend(messages)}
             user={{
-                _id: uid
+                _id: userID
             }}
             name={{ name: name}}
         />
