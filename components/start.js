@@ -13,6 +13,7 @@ const Home = ({ navigation }) => {
             .then((result) => {
                 navigation.navigate("Chat", { userID: result.user.uid, name: name, color: color ? color: '#FFF'})
                 Alert.alert("Signed in Successfully!")
+                console.log(result)
             })
             .catch(error => {
                 Alert.alert("Unable to sign in, try again later.")
