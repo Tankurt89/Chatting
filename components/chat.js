@@ -1,34 +1,57 @@
 import { useState, useEffect } from 'react';
-import { Bubble, GiftedChat } from 'react-native-gifted-chat';
+import { Bubble, GiftedChat, InputToolbar } from 'react-native-gifted-chat';
 import { StyleSheet, View, Text, KeyboardAvoidingView } from 'react-native';
 import { addDoc, collection, query, onSnapshot, orderBy } from "firebase/firestore"
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Chat = ({ route, navigation, db }) => {
+const Chat = ({ route, navigation, db, isConnected }) => {
     const { name, color, userID } = route.params;
     const [messages, setMessages] = useState([])
+
+    const loadCachedMessages = async () => { 
+        const cachedMessages = (await AsyncStorage.getItem('messages')) || []
+        setMessages(JSON.parse(cachedMessages))
+    }
+
+    let unsubMessages
+
     const onSend = (newMessages) => {
         addDoc(collection(db, "messages"), newMessages[0])
     }
      
     useEffect(() => {
         navigation.setOptions({ title: name})
-        const q = query(collection(db, "messages"),  orderBy("createdAt", "desc"))
-        const unsubMessages = onSnapshot(q, (documentsSnapshot) => {
-            let newMessages = [];
-            documentsSnapshot.forEach((doc) => {
-                newMessages.push({
-                    id: doc.id,
-                    ...doc.data(),
-                    createdAt: new Date(doc.data().createdAt.toMillis())
-                })
-            })
-            setMessages(newMessages)
-        })
-        return () => {
-            if (unsubMesssages) unsubMessages()
-        }
-    }, [])
 
+        if (isConnected === true){
+            if (unsubMessages) unsubMessages()
+            unsubMessages = null
+            const q = query(collection(db, "messages"),  orderBy("createdAt", "desc"))
+            const unsubMessages = onSnapshot(q, (documentsSnapshot) => {
+                let newMessages = [];
+                documentsSnapshot.forEach((doc) => {
+                    newMessages.push({
+                        id: doc.id,
+                        ...doc.data(),
+                        createdAt: new Date(doc.data().createdAt.toMillis())
+                    })
+                })
+                cachedMessages(newMessages)
+                setMessages(newMessages)
+            })
+        } else loadCachedMessages();
+        return () => {
+            if (unsubMessages) unsubMessages()
+        }
+    }, [isConnected])
+
+    const cachedMessages = async (messagesToCache) => {
+        await AsyncStorage.setItem('message', JSON.stringify(messagesToCache))
+    }
+
+    const renderInputToolbar = (props) => {
+        if (isConnected) return <InputToolbar {...props} />
+        else return null
+    }
 
     // Used to style the text bubbles in the chat 
     const renderBubble = (props) => {
@@ -55,6 +78,7 @@ const Chat = ({ route, navigation, db }) => {
                 _id: userID
             }}
             name={{ name: name}}
+            renderInputToolbar={renderInputToolbar}
         />
         {/* Make sure that the keyboard does not obstruct any view */}
         { Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height"/> : null}

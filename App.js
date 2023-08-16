@@ -3,13 +3,16 @@ import Chat from './components/chat'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { initializeApp } from "firebase/app"
-import { getFirestore } from "firebase/firestore"
-
+import { getFirestore, disableNetwork, enableNetwork } from "firebase/firestore"
+import { useNetInfo } from '@react-native-community/netinfo'
+import { Alert } from 'react-native'
+import { useEffect } from 'react'
 
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
+  const connectionStatus = useNetInfo()
   const firebaseConfig = {
     apiKey: "AIzaSyCQYfS0P1SLwM9vYUyZSvK73vYGpfAemDw",
     authDomain: "chatting-b59de.firebaseapp.com",
@@ -23,6 +26,14 @@ const App = () => {
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
   
+  useEffect(() => {
+    if (connectionStatus.isConnected === false){
+      Alert.alert('No Internet Connection!')
+      disableNetwork(db)
+    }else if (connectionStatus.isConnected === true){
+      enableNetwork(db)
+    }
+  }, [connectionStatus.isConnected])
 
   return (
     <NavigationContainer>
@@ -36,7 +47,7 @@ const App = () => {
         <Stack.Screen
           name="Chat"
         >
-          {props => <Chat db={db} {...props}/>}
+          {props => <Chat isConnected={connectionStatus.isConnected} db={db} {...props}/>}
         </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
