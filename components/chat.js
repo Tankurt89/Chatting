@@ -1,17 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Bubble, GiftedChat, InputToolbar } from 'react-native-gifted-chat';
 import { StyleSheet, View, Text, KeyboardAvoidingView } from 'react-native';
-import { addDoc, collection, query, onSnapshot, orderBy } from "firebase/firestore"
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { addDoc, collection, query, onSnapshot, orderBy, where } from "firebase/firestore";
+import { AsyncStorage } from '@react-native-async-storage/async-storage';
 
 const Chat = ({ route, navigation, db, isConnected }) => {
     const { name, color, userID } = route.params;
     const [messages, setMessages] = useState([])
-
-    const loadCachedMessages = async () => { 
-        const cachedMessages = (await AsyncStorage.getItem('messages')) || []
-        setMessages(JSON.parse(cachedMessages))
-    }
 
     let unsubMessages
 
@@ -21,12 +16,11 @@ const Chat = ({ route, navigation, db, isConnected }) => {
      
     useEffect(() => {
         navigation.setOptions({ title: name})
-
         if (isConnected === true){
             if (unsubMessages) unsubMessages()
             unsubMessages = null
-            const q = query(collection(db, "messages"),  orderBy("createdAt", "desc"))
-            const unsubMessages = onSnapshot(q, (documentsSnapshot) => {
+            const q = query(collection(db, "messages"), where("uid", "==", userID), orderBy("createdAt", "desc"))
+            unsubMessages = onSnapshot(q, async (documentsSnapshot) => {
                 let newMessages = [];
                 documentsSnapshot.forEach((doc) => {
                     newMessages.push({
@@ -44,8 +38,13 @@ const Chat = ({ route, navigation, db, isConnected }) => {
         }
     }, [isConnected])
 
+    const loadCachedMessages = async () => { 
+        const cachedMessages = await AsyncStorage.getItem('messages') || []
+        setMessages(JSON.parse(cachedMessages))
+    }
+
     const cachedMessages = async (messagesToCache) => {
-        await AsyncStorage.setItem('message', JSON.stringify(messagesToCache))
+        await AsyncStorage.setItem('messages', JSON.stringify(messagesToCache))
     }
 
     const renderInputToolbar = (props) => {
