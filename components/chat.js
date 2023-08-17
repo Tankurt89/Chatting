@@ -19,7 +19,7 @@ const Chat = ({ route, navigation, db, isConnected }) => {
         if (isConnected === true){
             if (unsubMessages) unsubMessages()
             unsubMessages = null
-            const q = query(collection(db, "messages"), where("uid", "==", userID), orderBy("createdAt", "desc"))
+            const q = query(collection(db, "messages"), orderBy("createdAt", "desc"))
             unsubMessages = onSnapshot(q, async (documentsSnapshot) => {
                 let newMessages = [];
                 documentsSnapshot.forEach((doc) => {
@@ -39,7 +39,7 @@ const Chat = ({ route, navigation, db, isConnected }) => {
     }, [isConnected])
 
     const loadCachedMessages = async () => { 
-        const cachedMessages = await AsyncStorage.getItem('messages') || []
+        const cachedMessages = (await AsyncStorage.getItem('messages')) || []
         setMessages(JSON.parse(cachedMessages))
     }
 
