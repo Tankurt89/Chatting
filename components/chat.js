@@ -44,7 +44,11 @@ const Chat = ({ route, navigation, db, isConnected }) => {
     }
 
     const cachedMessages = async (messagesToCache) => {
+        try {
         await AsyncStorage.setItem('messages', JSON.stringify(messagesToCache))
+    } catch (error) {
+        console.log(error.message)
+    }
     }
 
     const renderInputToolbar = (props) => {
