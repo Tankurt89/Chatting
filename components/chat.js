@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Bubble, GiftedChat, InputToolbar } from 'react-native-gifted-chat';
 import { StyleSheet, View, Text, KeyboardAvoidingView } from 'react-native';
-import { addDoc, collection, query, onSnapshot, orderBy, where } from "firebase/firestore";
+import { addDoc, collection, query, onSnapshot, orderBy } from "firebase/firestore";
 import { AsyncStorage } from '@react-native-async-storage/async-storage';
+import CustomActions from './CustomActions'
+import MapView from 'react-native-maps'
 
-const Chat = ({ route, navigation, db, isConnected }) => {
+const Chat = ({ route, navigation, db, isConnected, storage }) => {
     const { name, color, userID } = route.params;
     const [messages, setMessages] = useState([])
 
@@ -70,18 +72,43 @@ const Chat = ({ route, navigation, db, isConnected }) => {
             }}
         />
     }
+
+    const renderCustomActions = (props) => {
+        return <CustomActions userID={userID} storage={storage} {...props} />
+    }
+
+    const renderCustomView = (props) => {
+        const { currentMessage } = props
+        if (currentMessage.location) {
+            return (
+                <MapView 
+                    style={{width: 150, height: 100, borderRadius: 13, margin: 3}}
+                    region={{
+                        latitude: currentMessage.location.latitude,
+                        longitude: currentMessage.location.longitude,
+                        latitudeDelta: 0.0922,
+                        longitudeDelta: 0.0421    
+                    }}
+                />
+            )
+        }
+    }
+    
     //returns the message that the user types and sends
     return (
     <View style={[styles.container, {backgroundColor: color}]}>
         <GiftedChat
             messages={messages}
             renderBubble={renderBubble}
+            renderInputToolbar={renderInputToolbar}
+            renderActions={renderCustomActions}
+            renderCustomView={renderCustomView}
             onSend={messages => onSend(messages)}
             user={{
-                _id: userID
+                _id: userID,
+                name
             }}
-            name={{ name: name}}
-            renderInputToolbar={renderInputToolbar}
+            // name={{ name: name}}
         />
         {/* Make sure that the keyboard does not obstruct any view */}
         { Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height"/> : null}
