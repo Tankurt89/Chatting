@@ -22,7 +22,7 @@ const Chat = ({ route, navigation, db, isConnected, storage }) => {
             if (unsubMessages) unsubMessages()
             unsubMessages = null
             const q = query(collection(db, "messages"), orderBy("createdAt", "desc"))
-            unsubMessages = onSnapshot(q, async (documentsSnapshot) => {
+            unsubMessages = onSnapshot(q, (documentsSnapshot) => {
                 let newMessages = [];
                 documentsSnapshot.forEach((doc) => {
                     newMessages.push({
@@ -74,7 +74,7 @@ const Chat = ({ route, navigation, db, isConnected, storage }) => {
     }
 
     const renderCustomActions = (props) => {
-        return <CustomActions userID={userID} storage={storage} {...props} />
+        return <CustomActions userID={userID} storage={storage} {...props} />;
     }
 
     const renderCustomView = (props) => {
@@ -101,9 +101,9 @@ const Chat = ({ route, navigation, db, isConnected, storage }) => {
             messages={messages}
             renderBubble={renderBubble}
             renderInputToolbar={renderInputToolbar}
+            onSend={messages => onSend(messages)}
             renderActions={renderCustomActions}
             renderCustomView={renderCustomView}
-            onSend={messages => onSend(messages)}
             user={{
                 _id: userID,
                 name
