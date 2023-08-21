@@ -2,7 +2,7 @@
 
 A mobile chatting app, created using react native, that allows users to chat with each other, send images, take pictures, and send their location.
 
-![Sample image of the homescreen](https://github.com/Tankurt89/Chatting/blob/master/assets/Home.png) ![Sample image of the chat screen](https://github.com/Tankurt89/Chatting/blob/master/assets/Chat.png) ![Sample image of the action buttons](https://github.com/Tankurt89/Chatting/blob/master/assets/Action.png)
+<img src="https://github.com/Tankurt89/Chatting/blob/master/assets/Home.png" width="250" height="500" /><img src="https://github.com/Tankurt89/Chatting/blob/master/assets/Chat.png" width="250" height="500" /> <img src="https://github.com/Tankurt89/Chatting/blob/master/assets/Action.png" width="250" height="500" />
 
 # Requirements
 
