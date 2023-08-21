@@ -13,6 +13,7 @@ import { getStorage } from 'firebase/storage'
 const Stack = createNativeStackNavigator();
 
 const App = () => {
+  //set up for the google firebase storage
   const connectionStatus = useNetInfo()
   const firebaseConfig = {
     apiKey: "AIzaSyCQYfS0P1SLwM9vYUyZSvK73vYGpfAemDw",

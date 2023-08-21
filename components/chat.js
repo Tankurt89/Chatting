@@ -76,7 +76,7 @@ const Chat = ({ route, navigation, db, isConnected, storage }) => {
     const renderCustomActions = (props) => {
         return <CustomActions userID={userID} storage={storage} {...props} />;
     }
-
+    //Will send current location in the chat 
     const renderCustomView = (props) => {
         const { currentMessage } = props
         if (currentMessage.location) {

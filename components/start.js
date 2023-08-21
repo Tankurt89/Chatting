@@ -11,7 +11,7 @@ const Home = ({ navigation }) => {
     const signInUser = () => {
         signInAnonymously(auth)
             .then((result) => {
-                navigation.navigate("Chat", { userID: result.user.uid, name: name, color: color ? color: '#FFF'})
+                navigation.navigate("Chat", { userID: result.user.uid, name: name, color: color ? color: '#ddd'})
                 Alert.alert("Signed in Successfully!")
                 console.log(result)
             })
@@ -24,7 +24,8 @@ const Home = ({ navigation }) => {
         <View style={styles.container}>
             <ImageBackground source={image} resizeMode="cover" style={styles.image}>
             <Text style={styles.appTitle}>Chatting</Text>
-            <View style={styles.optionContainer}>
+            {/* second part of style will change the backgroundColor of the container to whatever the user selected, if no color is selected a default color is given */}
+            <View style={[styles.optionContainer, {backgroundColor: color ? color: '#ddd'}]}>
                 <TextInput
                     style={styles.textInput}
                     value={name}
@@ -37,7 +38,7 @@ const Home = ({ navigation }) => {
                     {/* Each individual background color choice is mapped out here */}
                     <TouchableOpacity 
                     style={[styles.circle, {backgroundColor: '#090C08'}]}
-                    onPress={() => setColor('#090C08')}>
+                    onPress={() => {setColor('#090C08')}}>
                     </TouchableOpacity>
                     <TouchableOpacity 
                     style={[styles.circle, {backgroundColor: '#474056'}]}
@@ -85,14 +86,16 @@ const styles = StyleSheet.create({
     },
     optionContainer: {
         flex: 1,
-        backgroundColor: '#FFF',
         padding: '6%',
-        flexBasis: 160,
+        flexBasis: 130,
+        borderRadius: 25,
+        background: '#73AD21',
+        opacity: 0.9,
     },
     textInput: {
         fontSize: 16,
-        fontWeight: '300',
-        color: '#757083',
+        fontWeight: '600',
+        color: '#FFF',
         padding: 15,
         borderWidth: 1,
         borderColor: '#757083',
@@ -101,8 +104,8 @@ const styles = StyleSheet.create({
     },
     colorSelectText: {
         fontSize: 16,
-        fontWeight: '300',
-        color: '#757083',
+        fontWeight: '600',
+        color: '#FFF',
         opacity: 100,
     },
     colorSelect: {
@@ -111,6 +114,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         margin: 10,
         padding: 10,
+        opacity: 0.9,
     },
     circle: {
         height: 50,
