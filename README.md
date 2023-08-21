@@ -28,6 +28,7 @@ A mobile chatting app, created using react native, that allows users to chat wit
 9. Download and install Android Studio (steps below)
 10. Sign up for Expo and install Expo Go on your mobile devices (steps below)
 11. Back in the terminal run expo login and go through the login process.
+12. In the terminal use 'npx expo start' for future uses
 
 ## Firebase setup
 
