@@ -1,14 +1,17 @@
 import { useState, useEffect } from 'react';
 import { Bubble, GiftedChat, InputToolbar } from 'react-native-gifted-chat';
-import { StyleSheet, View, Text, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, View, Text, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
 import { addDoc, collection, query, onSnapshot, orderBy } from "firebase/firestore";
 import { AsyncStorage } from '@react-native-async-storage/async-storage';
 import CustomActions from './CustomActions'
 import MapView from 'react-native-maps'
+import { Audio } from 'expo-av'
 
 const Chat = ({ route, navigation, db, isConnected, storage }) => {
-    const { name, color, userID } = route.params;
+    const { name, color, userID } = route.params
     const [messages, setMessages] = useState([])
+
+    let soundObject = null;
 
     let unsubMessages
 
@@ -37,6 +40,7 @@ const Chat = ({ route, navigation, db, isConnected, storage }) => {
         } else loadCachedMessages();
         return () => {
             if (unsubMessages) unsubMessages()
+            if (soundObject) soundObject.unloadAsync()
         }
     }, [isConnected])
 
@@ -52,7 +56,7 @@ const Chat = ({ route, navigation, db, isConnected, storage }) => {
         console.log(error.message)
     }
     }
-
+    //Renders the area to input the users text
     const renderInputToolbar = (props) => {
         if (isConnected) return <InputToolbar {...props} />
         else return null
@@ -93,6 +97,20 @@ const Chat = ({ route, navigation, db, isConnected, storage }) => {
             )
         }
     }
+    //Renders the chat bubble with the audio recording once the user clicks 'Stop and Send'
+    const renderAudioBubble = (props) => {
+        return <View {...props}>
+            <TouchableOpacity
+                style={{ backgroundColor: '#FF0', borderRadius: 10, margin: 5}}
+                onPress={async () => {
+                    const { sound } = await Audio.Sound.createAsync({ uri: props.currentMessage.audio })
+                    soundObject = sound
+                    await sound.playAsync()
+                }}>
+                <Text style={{ textAlign: 'center', color: 'black', padding: 5 }}>Play Sound</Text>
+            </TouchableOpacity>
+        </View>
+    }
     
     //returns the message that the user types and sends
     return (
@@ -104,11 +122,11 @@ const Chat = ({ route, navigation, db, isConnected, storage }) => {
             onSend={messages => onSend(messages)}
             renderActions={renderCustomActions}
             renderCustomView={renderCustomView}
+            renderMessageAudio={renderAudioBubble}
             user={{
                 _id: userID,
                 name
             }}
-            // name={{ name: name}}
         />
         {/* Make sure that the keyboard does not obstruct any view */}
         { Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height"/> : null}
