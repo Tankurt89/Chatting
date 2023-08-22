@@ -49,7 +49,7 @@ A mobile chatting app, created using react native, that allows users to chat wit
 1. Navigate to 'https://developer.android.com/studio'
 2. Download Android Studio Giraffe
 3. Follow the installation process
-4. Once you get to the main screen navigate to More Actions-->Virtual Device Manager
+4. Once you get to the main screen navigate to More Actions->Virtual Device Manager
 5. Set up and install the device you prefer to use (for this project I used Pixel 7 Pro)
 
 ## Expo
