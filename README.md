@@ -10,6 +10,7 @@ A mobile chatting app, created using react native, that allows users to chat wit
 - Firebase Account
 - Expo
 - Mobile OS Emulator (Android Studio)
+- Personal device (smartphone or tablet)
 
 # Set Up and Installation
 
@@ -18,39 +19,40 @@ A mobile chatting app, created using react native, that allows users to chat wit
 ## General
 
 1. Clone Repository
-2. Navigate to project directory in the terminal.
-3. Run 'npm install 16.19.0' to install the base dependencies
-4. Run 'npm use 16.19.0'
-5. Run 'npm i firebase'
-6. Run 'npm i expo'
-7. Run 'npm i whatwg-fetch@3.6.2' (current whatwg version causes issues with images being able to be sent. This version still functions as intended.)
-8. Sign up for and set up Firebase (steps below)
-9. Download and install Android Studio (steps below)
-10. Sign up for Expo and install Expo Go on your mobile devices (steps below)
-11. Back in the terminal run expo login and go through the login process.
-12. In the terminal use 'npx expo start' for future uses
+1. Navigate to project directory in the terminal.
+1. Run 'npm install 16.19.0' to install the base dependencies
+1. Run 'npm use 16.19.0'
+1. Run 'npm i firebase'
+1. Run 'npm i expo'
+1. Run 'npm i whatwg-fetch@3.6.2' (current whatwg version causes issues with images being able to be sent. This version still functions as intended.)
+1. Run 'expo install expo-av'
+1. Sign up for and set up Firebase (steps below)
+1. Download and install Android Studio (steps below)
+1. Sign up for Expo and install Expo Go on your mobile devices (steps below)
+1. Back in the terminal run expo login and go through the login process.
+1. In the terminal use 'npx expo start' for future uses
 
 ## Firebase setup
 
 1. Navigate to 'https://firebase.google.com/'
-2. Navigate to the console ('Go To Console' in the top right)
-3. Add project
-4. Once in the project use 'Build->Firesstore Database' on the left sid eof the screen under product categories
-5. Create Database, Start in production mode, hit next and then enable.
-6. Once in Firestore Database navigate to rules and change 'allow read, write: if false;' to 'allow read, write: if true;' and publish.
-7. Navigate to 'Project Settings->General'
-8. Under 'Your apps' select webapp (</>)
-9. Select a nickname (you don't have to setup Firebase Hosting) and follow the prompts.
-10. Copy the section of code starting with 'const firebaseConfig =' and paste it into App.js replacing what is in there already.
-11. Set up Android Studio
+1. Navigate to the console ('Go To Console' in the top right)
+1. Add project
+1. Once in the project use 'Build->Firestore Database' on the left sid eof the screen under product categories
+1. Create Database, Start in production mode, hit next and then enable.
+1. Once in Firestore Database navigate to rules and change 'allow read, write: if false;' to 'allow read, write: if true;' and publish.
+1. Navigate to 'Project Settings->General'
+1. Under 'Your apps' select webapp (</>)
+1. Select a nickname (you don't have to setup Firebase Hosting) and follow the prompts.
+1. Copy the section of code starting with 'const firebaseConfig =' and paste it into App.js replacing what is in there already.
+1. Set up Android Studio
 
 ## Android Studio
 
 1. Navigate to 'https://developer.android.com/studio'
-2. Download Android Studio Giraffe
-3. Follow the installation process
-4. Once you get to the main screen navigate to More Actions->Virtual Device Manager
-5. Set up and install the device you prefer to use (for this project I used Pixel 7 Pro)
+1. Download Android Studio Giraffe
+1. Follow the installation process
+1. Once you get to the main screen navigate to More Actions->Virtual Device Manager
+1. Set up and install the device you prefer to use (for this project I used Pixel 7 Pro)
 
 ## Expo
 
