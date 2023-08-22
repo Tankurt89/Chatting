@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     optionContainer: {
         flex: 1,
         padding: '6%',
-        flexBasis: 130,
+        flexBasis: 100,
         borderRadius: 25,
         background: '#73AD21',
         opacity: 0.9,
@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
         borderColor: '#757083',
         marginTop: 15,
         marginBottom: 15,
+        borderRadius: 25,
     },
     colorSelectText: {
         fontSize: 16,
@@ -112,7 +113,8 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'space-around',
         flexDirection: "row",
-        margin: 10,
+        marginTop: 10,
+        marginBottom: 10,
         padding: 10,
         opacity: 0.9,
     },
@@ -123,6 +125,7 @@ const styles = StyleSheet.create({
     },
     buttonInput: {
         alignContent: 'center',
+        borderRadius: 25,
         backgroundColor: '#757083',
         padding: 10,
         color: '#FFF',
